@@ -280,34 +280,80 @@ button.secondary:hover {
   justify-content: center;
 }
 
+
 .card-button {
   width: clamp(64px, 12vw, 96px);
   aspect-ratio: 1 / 1;
-  border-radius: 18px;
   border: none;
-  background: #e0e7ff;
-  font-size: clamp(1.75rem, 6vw, 2.7rem);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  padding: 0;
+  background: transparent;
+  border-radius: 18px;
   position: relative;
+  perspective: 1000px;
+  cursor: pointer;
+}
+
+.card-button:hover,
+.card-button:active {
+  transform: none;
+  box-shadow: none;
+}
+
+.card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 18px;
+  transform-style: preserve-3d;
+  transition: transform 320ms ease;
+}
+
+.card-button[data-flipped="true"] .card-inner {
+  transform: rotateY(180deg);
+}
+
+.card-button[data-state="revealed"] .card-inner {
+  transform: rotateY(180deg) translate3d(0, -4px, 0);
+}
+
+.card-face {
+  position: absolute;
+  inset: 0;
+  border-radius: 18px;
+  display: grid;
+  place-items: center;
+  font-size: clamp(1.75rem, 6vw, 2.7rem);
+  backface-visibility: hidden;
   box-shadow: 0 10px 18px rgba(99, 102, 241, 0.2);
-  transition: transform 180ms ease, background 150ms ease, box-shadow 180ms ease;
+  transition: transform 220ms ease, box-shadow 200ms ease, background 180ms ease,
+    color 180ms ease;
 }
 
-.card-button[data-state="hidden"] {
+.card-face-back {
   background: #c7d2fe;
-  color: transparent;
+  color: #4338ca;
+  transform: rotateY(0deg);
 }
 
-.card-button[data-state="revealed"] {
-  transform: translateY(-4px);
+.card-face-front {
+  background: #e0e7ff;
+  transform: rotateY(180deg);
 }
 
-.card-button[data-state="matched"] {
+.card-button[data-state="revealed"] .card-face-front {
+  transform: rotateY(180deg) translateY(-4px);
+}
+
+
+.card-button[data-state="matched"] .card-face-front {
   background: #34d399;
+  color: #064e3b;
   box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3);
-  animation: bounce 540ms ease;
+  animation: matchedBounce 540ms ease;
+}
+
+.card-button[data-state="matched"] .card-inner {
+  transform: rotateY(180deg);
 }
 
 .card-button:disabled {
@@ -358,18 +404,18 @@ button.secondary:hover {
   font-size: 2.6rem;
 }
 
-@keyframes bounce {
+@keyframes matchedBounce {
   0% {
-    transform: scale(1);
+    transform: rotateY(180deg) scale(1);
   }
   40% {
-    transform: scale(1.08);
+    transform: rotateY(180deg) scale(1.08);
   }
   70% {
-    transform: scale(0.98);
+    transform: rotateY(180deg) scale(0.98);
   }
   100% {
-    transform: scale(1);
+    transform: rotateY(180deg) scale(1);
   }
 }
 

@@ -581,28 +581,37 @@ export default function App() {
         }}
         aria-label="Memory cards"
       >
-        {deck.map((card, index) => (
-          <button
-            key={card.id}
-            type="button"
-            className="card-button"
-            onClick={() => handleCardClick(index)}
-            disabled={card.state === "matched" || isBusy}
-            data-state={card.state}
-            aria-pressed={card.state !== "hidden"}
-            aria-label={
-              card.state === "hidden"
-                ? "Hidden card"
-                : card.state === "matched"
-                ? `Matched ${card.emoji}`
-                : `Revealed ${card.emoji}`
-            }
-          >
-            {card.state === "hidden" && !revealedIndexes.includes(index)
-              ? "❔"
-              : card.emoji}
-          </button>
-        ))}
+        {deck.map((card, index) => {
+          const isFlipped =
+            card.state === "matched" ||
+            card.state === "revealed" ||
+            revealedIndexes.includes(index);
+
+          return (
+            <button
+              key={card.id}
+              type="button"
+              className="card-button"
+              onClick={() => handleCardClick(index)}
+              disabled={card.state === "matched" || isBusy}
+              data-state={card.state}
+              data-flipped={isFlipped}
+              aria-pressed={card.state !== "hidden"}
+              aria-label={
+                card.state === "hidden"
+                  ? "Hidden card"
+                  : card.state === "matched"
+                  ? `Matched ${card.emoji}`
+                  : `Revealed ${card.emoji}`
+              }
+            >
+              <span className="card-inner" aria-hidden="true">
+                <span className="card-face card-face-back">❔</span>
+                <span className="card-face card-face-front">{card.emoji}</span>
+              </span>
+            </button>
+          );
+        })}
       </section>
       {isGameWon && (
         <div className="celebration-overlay" role="dialog" aria-modal="true">
