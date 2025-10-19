@@ -28,10 +28,10 @@ const styles = {
     aspect-ratio: 1 / 1;
     border: none;
     padding: 0;
-    background: transparent;
+    // background: pink;
     border-radius: 18px;
     position: relative;
-    perspective: 1000px;
+    // perspective: 1000px;
     cursor: pointer;
 
     &:hover,
@@ -53,6 +53,7 @@ const styles = {
     transform-style: preserve-3d;
     -webkit-transform-style: preserve-3d;
     transition: transform 320ms ease;
+    background: salmon;
   `,
   innerFlipped: css`
     transform: rotateY(180deg);
