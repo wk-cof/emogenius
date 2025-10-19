@@ -81,7 +81,7 @@ const styles = {
   `,
   faceFront: css`
     background: #e0e7ff;
-    transform: rotateY(180deg);
+    // transform: rotateY(180deg);
     color: #1f2933;
   `,
   faceFrontPeek: css`
@@ -105,8 +105,8 @@ export function MemoryCard({ card, disabled, onClick }: MemoryCardProps) {
   if (isRevealed) innerStyles.push(styles.innerPeek);
 
   const frontStyles = [styles.face, styles.faceFront];
-  if (isRevealed) frontStyles.push(styles.faceFrontPeek);
-  if (isMatched) frontStyles.push(styles.faceFrontMatched);
+  // if (isRevealed) frontStyles.push(styles.faceFrontPeek);
+  // if (isMatched) frontStyles.push(styles.faceFrontMatched);
 
   const backStyles = [styles.face, styles.faceBack];
 
