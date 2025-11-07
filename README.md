@@ -52,21 +52,30 @@ npm run preview
 
 ## Deployment — GitHub Pages
 
-1. **Create a production build** with the repository name as the base path:
-   ```bash
-   BASE_PATH=/your-repo-name npm run build
-   ```
-   Replace `/your-repo-name` with the exact GitHub repository slug (e.g. `/emogenius`).
+### One-command deploy (recommended)
 
-2. **Push the `dist/` folder** to the `gh-pages` branch. A popular approach is to install the [gh-pages](https://www.npmjs.com/package/gh-pages) helper:
+```bash
+npm run deploy
+```
+
+The Vite config already sets the production base path to `/emogenius/`, so the bundle references the correct GitHub Pages URL. The script simply builds and publishes `dist/` to the `gh-pages` branch with [gh-pages](https://www.npmjs.com/package/gh-pages); that branch is created automatically if it does not exist.
+
+### Manual steps (if you fork under a different repo name)
+
+1. Update the `repoBasePath` constant inside `vite.config.ts` to match your repository slug (e.g. `/emoji-master/`), then run:
+   ```bash
+   npm run build
+   ```
+
+2. Publish the production build to the `gh-pages` branch:
    ```bash
    npx gh-pages -d dist
    ```
    The command above creates (or updates) a `gh-pages` branch that contains the static build artifacts.
 
-3. **Enable GitHub Pages** in your repository settings: choose `Deploy from a branch` and pick the `gh-pages` branch with the `/ (root)` folder.
+3. Enable GitHub Pages in your repository settings: choose `Deploy from a branch` and pick the `gh-pages` branch with the `/ (root)` folder.
 
-4. Your game will be live at `https://<username>.github.io/<your-repo-name>/` once Pages finishes publishing (usually under a minute). Future deploys are just `BASE_PATH=/your-repo-name npm run build` + `npx gh-pages -d dist`.
+4. Your game will be live at `https://<username>.github.io/<your-repo-name>/` once Pages finishes publishing (usually under a minute). Future deploys are just `npm run deploy`.
 
 ---
 

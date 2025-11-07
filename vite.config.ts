@@ -1,9 +1,9 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 
-const base = process.env.BASE_PATH ?? "/";
+const repoBasePath = "/emogenius/";
 
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
   plugins: [react()],
-  base
-});
+  base: mode === "production" ? repoBasePath : "/"
+}));
